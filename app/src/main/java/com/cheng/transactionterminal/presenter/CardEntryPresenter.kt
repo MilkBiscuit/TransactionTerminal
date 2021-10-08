@@ -1,7 +1,7 @@
 package com.cheng.transactionterminal.presenter
 
-import com.cheng.transactionterminal.contract.ExpiryTimeValidationResult
 import com.cheng.transactionterminal.contract.ICardEntryPresenter
+import com.cheng.transactionterminal.usecase.ExpiryTimeValidationResult
 
 class CardEntryPresenter : ICardEntryPresenter {
 
@@ -15,34 +15,7 @@ class CardEntryPresenter : ICardEntryPresenter {
         TODO("Not yet implemented")
     }
 
-    override fun formatExpiryTime(input: String): String {
-        val inputLength = input.length
-        return when {
-            inputLength == 0 -> ""
-            inputLength <= 2 -> {
-                addSlashAfterMonth(input)
-            }
-            inputLength <= 3 -> {
-                val monthString = input.substring(0, 2)
-                val monthAddSlash = addSlashAfterMonth(monthString)
-                "$monthAddSlash${input.substring(2)}"
-            }
-            inputLength == 4 -> {
-                val monthString = input.substring(0, 2)
-                val monthAddSlash = addSlashAfterMonth(monthString)
-                val slashIndex = monthAddSlash.indexOf('/')
-                if (slashIndex == 1) {
-                    // e.g. "1311"
-                    input
-                } else {
-                    "$monthAddSlash${input.substring(2)}"
-                }
-            }
-            else -> input
-        }
-    }
-
-    override fun validateExpiryTime(input: String): ExpiryTimeValidationResult {
+    fun validateExpiryTime(input: String): ExpiryTimeValidationResult {
         return when(input.length) {
             0, 1 -> ExpiryTimeValidationResult.SUCCESS
             2 -> {
@@ -95,19 +68,4 @@ class CardEntryPresenter : ICardEntryPresenter {
         }
     }
 
-    private fun addSlashAfterMonth(input: String): String {
-        if (input.length > 2) {
-            return input
-        }
-
-        return when (input.toIntOrNull()) {
-            null -> input
-            0 -> input
-            in 1..12 -> "$input/"
-            else -> {
-                val monthString = input.substring(0, 1)
-                "$monthString/${input.substring(1)}"
-            }
-        }
-    }
 }
