@@ -7,7 +7,22 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="save">Save</string>
 
+    <!-- First fragment -->
     <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- Card entry fragment -->
+    <string name="action_continue">Continue</string>
+    <string name="hint_card_number">Card Number</string>
+    <string name="hint_expiry">MM/YY</string>
+    <string name="hint_cvv">CVV</string>
+    <string name="hint_moto_type">MOTO type</string>
+    <string name="hint_card_stored">Card Stored?</string>
+    <string name="warning_required_field">Required field</string>
+    <string-array name="moto_type_values">
+        <item>Single</item>
+        <item>Recurring</item>
+    </string-array>
+
 </resources>

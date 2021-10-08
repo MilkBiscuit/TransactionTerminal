@@ -28,7 +28,7 @@ class CardEntryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSecond.setOnClickListener {
+        binding.buttonContinueTransaction.setOnClickListener {
             findNavController().navigate(R.id.action_to_first_fragment)
         }
     }
