@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/CardEntryFragment"
         android:name="com.cheng.transactionterminal.ui.CardEntryFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/card_entry_fragment_label"
         tools:layout="@layout/fragment_card_entry">
 
         <action
