@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.cheng.transactionterminal.entity.Transaction
+import androidx.room.TypeConverters
+import com.cheng.transactionterminal.entity.BankCard
+import com.cheng.transactionterminal.entity.TransactionRecord
 
-@Database(entities = arrayOf(Transaction::class), version = 1)
+@Database(entities = [TransactionRecord::class, BankCard::class], version = 1)
+@TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
@@ -29,6 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
-    abstract fun transactionDao(): TransactionDao
+    abstract fun transactionDao(): TransactionRecordDao
+    abstract fun bankCardDao(): BankCardDao
 
 }
