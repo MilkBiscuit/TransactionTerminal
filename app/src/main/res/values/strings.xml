@@ -19,6 +19,8 @@
     <string name="hint_cvv">CVV</string>
     <string name="hint_moto_type">MOTO type</string>
     <string name="hint_card_stored">Card Stored?</string>
+    <string name="helper_text_master_card">Master Card</string>
+    <string name="helper_text_visa_card">Visa Card</string>
     <string name="warning_required_field">Required field</string>
     <string name="warning_invalid_month_year">Invalid month/year</string>
     <string name="warning_card_expired">Card has expired</string>

@@ -48,6 +48,14 @@ class CardEntryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.editTextCardNumber.addTextChangedListener(
+            CardNumberTextWatcher(
+                WeakReference(context),
+                WeakReference(binding.editTextCardNumber),
+                WeakReference(binding.inputLayoutCardNumber)
+            )
+        )
+
         binding.editTextExpiry.addTextChangedListener(
             ExpiryTimeTextWatcher(
                 WeakReference(context),

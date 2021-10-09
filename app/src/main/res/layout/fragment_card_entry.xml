@@ -41,6 +41,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:maxLength="23"
+                android:nextFocusDown="@+id/edit_text_expiry"
+                android:nextFocusForward="@+id/edit_text_expiry"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,6 +64,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLength="5"
+                    android:nextFocusDown="@+id/edit_text_cvv"
+                    android:nextFocusForward="@+id/edit_text_cvv"
                     />
             </com.google.android.material.textfield.TextInputLayout>
             <View
