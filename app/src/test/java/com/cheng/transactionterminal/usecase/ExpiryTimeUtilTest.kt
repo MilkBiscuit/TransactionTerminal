@@ -153,6 +153,9 @@ class ExpiryTimeUtilTest {
         input = "9/55"
         result = ExpiryTimeUtil.validateExpiryTime(input)
         Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+        input = "09/6"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
 
         // Given input length is 5
         input = "00001"
@@ -245,6 +248,15 @@ class ExpiryTimeUtilTest {
         yearInt = 20
         result = ExpiryTimeUtil.validateMonthYear(monthInt, yearInt)
         Assert.assertEquals(ExpiryTimeValidationResult.CARD_EXPIRED, result)
+        monthInt = 9
+        yearInt = 21
+        result = ExpiryTimeUtil.validateMonthYear(monthInt, yearInt)
+        Assert.assertEquals(ExpiryTimeValidationResult.CARD_EXPIRED, result)
+        // Will FAIL after 1/Nov/2021
+        monthInt = 10
+        yearInt = 21
+        result = ExpiryTimeUtil.validateMonthYear(monthInt, yearInt)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
 
         monthInt = 1
         yearInt = 55

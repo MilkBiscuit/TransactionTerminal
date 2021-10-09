@@ -20,8 +20,9 @@
     <string name="hint_moto_type">MOTO type</string>
     <string name="hint_card_stored">Card Stored?</string>
     <string name="warning_required_field">Required field</string>
+    <string name="warning_invalid_month_year">Invalid month/year</string>
     <string name="warning_card_expired">Card has expired</string>
-    <string name="warning_invalid_card_number">Invalid card number</string>
+    <string name="warning_invalid_card_number">Invalid or unsupported form of payment</string>
     <string-array name="moto_type_values">
         <item>Single</item>
         <item>Recurring</item>

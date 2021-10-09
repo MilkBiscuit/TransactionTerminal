@@ -33,7 +33,11 @@ class CardEntryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.editTextExpiry.addTextChangedListener(
-            ExpiryTimeTextWatcher(WeakReference(binding.editTextExpiry))
+            ExpiryTimeTextWatcher(
+                WeakReference(context),
+                WeakReference(binding.editTextExpiry),
+                WeakReference(binding.inputLayoutExpiry)
+            )
         )
         binding.buttonContinueTransaction.setOnClickListener {
             findNavController().navigate(R.id.action_to_first_fragment)

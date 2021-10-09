@@ -1,8 +1,17 @@
 package com.cheng.transactionterminal.usecase
 
-import com.cheng.transactionterminal.presenter.CardEntryPresenter
+import java.util.*
 
 object ExpiryTimeUtil {
+
+    private val CURRENT_YEAR: Int
+    private val CURRENT_MONTH: Int
+    init {
+        val calendar = Calendar.getInstance()
+        CURRENT_YEAR = calendar.get(Calendar.YEAR) - 2000
+        CURRENT_MONTH = calendar.get(Calendar.MONTH) + 1
+    }
+
     fun formatExpiryTime(input: String): String {
         input.toIntOrNull()
             ?: return input
@@ -45,6 +54,10 @@ object ExpiryTimeUtil {
         if (slashIndex == -1) {
             return ExpiryTimeValidationResult.INVALID_TIME
         }
+        if (slashIndex == 2 && inputLen == 4) {
+            // e.g. "03/6", which indicates the user hasn't finished
+            return ExpiryTimeValidationResult.SUCCESS
+        }
 
         val monthInt = input.substring(0, slashIndex).toIntOrNull()
         val yearInt = input.substring(slashIndex + 1).toIntOrNull()
@@ -58,9 +71,9 @@ object ExpiryTimeUtil {
         }
 
         return when (yearInt) {
-            in 0 until CardEntryPresenter.CURRENT_YEAR -> ExpiryTimeValidationResult.CARD_EXPIRED
-            CardEntryPresenter.CURRENT_YEAR -> {
-                if (monthInt < CardEntryPresenter.CURRENT_MONTH) ExpiryTimeValidationResult.CARD_EXPIRED
+            in 0 until CURRENT_YEAR -> ExpiryTimeValidationResult.CARD_EXPIRED
+            CURRENT_YEAR -> {
+                if (monthInt < CURRENT_MONTH) ExpiryTimeValidationResult.CARD_EXPIRED
                 else ExpiryTimeValidationResult.SUCCESS
             }
             else -> ExpiryTimeValidationResult.SUCCESS
