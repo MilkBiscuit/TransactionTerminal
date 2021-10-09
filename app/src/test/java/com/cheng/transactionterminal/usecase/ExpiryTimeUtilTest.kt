@@ -91,6 +91,9 @@ class ExpiryTimeUtilTest {
         input = "11111"
         result = ExpiryTimeUtil.formatExpiryTime(input)
         Assert.assertEquals("11111", result)
+        input = "1111a"
+        result = ExpiryTimeUtil.formatExpiryTime(input)
+        Assert.assertEquals("1111a", result)
     }
 
     @Test
