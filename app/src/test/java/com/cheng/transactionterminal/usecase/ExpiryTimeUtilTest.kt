@@ -94,6 +94,103 @@ class ExpiryTimeUtilTest {
     }
 
     @Test
+    fun testIsExpiryTimeValid() {
+        var input = ""
+        var result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+        input = "0"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+        input = "00"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+        input = "12"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+        input = "13"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+
+        // Given input length is 3
+        input = "001"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+        input = "024"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+        input = "122"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+        input = "132"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+        input = "203"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+
+        // Given input length is 4
+        input = "0003"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "0111"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "0155"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "0/03"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "0/55"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "1/11"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.CARD_EXPIRED, result)
+        input = "1/55"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+        input = "9/55"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+
+        // Given input length is 5
+        input = "00001"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "01111"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "1a/55"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "11/a5"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "11/5a"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "00/01"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "00/55"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "13/11"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "13/55"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.INVALID_TIME, result)
+        input = "01/11"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.CARD_EXPIRED, result)
+        input = "01/55"
+        result = ExpiryTimeUtil.validateExpiryTime(input)
+        Assert.assertEquals(ExpiryTimeValidationResult.SUCCESS, result)
+    }
+
+    @Test
     fun testValidateMonthYear() {
         var monthInt: Int? = null
         var yearInt: Int? = null
