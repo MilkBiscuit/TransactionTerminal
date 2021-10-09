@@ -28,6 +28,8 @@ object CardNumberUtil {
         return StringUtil.matchesRegex(input, VISA_CARD_REGEX)
     }
 
+    fun removeWhiteSpace(input: String) = input.filterNot { it.isWhitespace() }
+
     fun formatCardNumber(input: String): String {
         val inputLen = input.length
         if (inputLen == 0 || inputLen > CARD_NUMBER_MAX_LENGTH) {
@@ -36,7 +38,7 @@ object CardNumberUtil {
         if (isFormattedCardNumber(input)) {
             return input
         }
-        val withoutSpace = input.filterNot { it.isWhitespace() }
+        val withoutSpace = removeWhiteSpace(input)
         if (withoutSpace.length < CARD_NUMBER_SECTION_LENGTH) {
             return withoutSpace
         }

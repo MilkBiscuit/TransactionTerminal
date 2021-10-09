@@ -25,6 +25,8 @@
     <string name="warning_required_field">Required field</string>
     <string name="warning_invalid_month_year">Invalid month/year</string>
     <string name="warning_card_expired">Card has expired</string>
+    <string name="warning_moto_type_missing">Please choose a type</string>
+    <string name="warning_no_cvv_reason_missing">Please specify the reason of CVV missing</string>
     <string name="warning_invalid_card_number">Invalid or unsupported form of payment</string>
     <string-array name="moto_type_values">
         <item>Single</item>

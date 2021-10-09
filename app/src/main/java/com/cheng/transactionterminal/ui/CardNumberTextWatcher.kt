@@ -46,12 +46,13 @@ class CardNumberTextWatcher(
             }
         }
         if (formattedLength >= CardNumberUtil.CARD_NUMBER_MIN_LENGTH) {
-            val cardNumberString = input.filterNot { it.isWhitespace() }
+            val cardNumberString = CardNumberUtil.removeWhiteSpace(input)
             if (CardNumberUtil.isMasterCard(cardNumberString)) {
                 inputLayoutRef.get()?.helperText = contextRef.get()?.getText(R.string.helper_text_master_card)
             } else if (CardNumberUtil.isVisaCard(cardNumberString)) {
                 inputLayoutRef.get()?.helperText = contextRef.get()?.getText(R.string.helper_text_visa_card)
             }
+            inputLayoutRef.get()?.error = null
         } else {
             inputLayoutRef.get()?.helperText = null
         }
