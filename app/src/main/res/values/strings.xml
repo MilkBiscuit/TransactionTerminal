@@ -18,6 +18,7 @@
     <string name="hint_expiry">MM/YY</string>
     <string name="hint_cvv">CVV</string>
     <string name="hint_moto_type">MOTO type</string>
+    <string name="hint_no_cvv_reason">No CVV Reason</string>
     <string name="hint_card_stored">Card Stored?</string>
     <string name="helper_text_master_card">Master Card</string>
     <string name="helper_text_visa_card">Visa Card</string>
@@ -28,6 +29,11 @@
     <string-array name="moto_type_values">
         <item>Single</item>
         <item>Recurring</item>
+    </string-array>
+    <string-array name="no_cvv_reason_values">
+        <item>No CVV on card</item>
+        <item>No card present</item>
+        <item>Unable to read</item>
     </string-array>
 
 </resources>

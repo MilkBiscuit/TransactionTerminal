@@ -1,4 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin_standard">20dp</dimen>
+    <dimen name="margin_large">30dp</dimen>
+    <dimen name="margin_super_large">40dp</dimen>
 </resources>
