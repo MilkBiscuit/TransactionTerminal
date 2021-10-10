@@ -15,15 +15,20 @@
         <action
             android:id="@+id/action_to_card_entry_fragment"
             app:destination="@id/CardEntryFragment" />
+        <action
+            android:id="@+id/action_to_search_transaction_fragment"
+            app:destination="@id/SearchTransactionFragment" />
     </fragment>
     <fragment
         android:id="@+id/CardEntryFragment"
         android:name="com.cheng.transactionterminal.ui.CardEntryFragment"
         android:label="@string/card_entry_fragment_label"
         tools:layout="@layout/fragment_card_entry">
-
-        <action
-            android:id="@+id/action_to_first_fragment"
-            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SearchTransactionFragment"
+        android:name="com.cheng.transactionterminal.ui.SearchTransactionFragment"
+        android:label="@string/search_transaction_fragment_label"
+        tools:layout="@layout/fragment_search_transaction">
     </fragment>
 </navigation>

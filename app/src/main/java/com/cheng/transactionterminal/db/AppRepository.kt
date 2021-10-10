@@ -18,6 +18,10 @@ class AppRepository(
     }
 
     fun searchTransactionsByCardNumber(lastFourDigits: String): List<TransactionRecord> {
+        if (lastFourDigits.isBlank() || lastFourDigits.length != 4) {
+            return emptyList()
+        }
+
         val transactionRecordList = mutableListOf<TransactionRecord>()
         val bankCardWithTransactions = bankCardWithTransactionsList.filter {
             it.bankCard.cardNumber.endsWith(lastFourDigits)

@@ -5,16 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.cheng.transactionterminal.R
-import com.cheng.transactionterminal.databinding.FragmentFirstBinding
+import com.cheng.transactionterminal.databinding.FragmentSearchTransactionBinding
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
-class FirstFragment : Fragment() {
+class SearchTransactionFragment : Fragment() {
 
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: FragmentSearchTransactionBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
@@ -23,7 +18,7 @@ class FirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchTransactionBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -31,11 +26,9 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonPay.setOnClickListener {
-            findNavController().navigate(R.id.action_to_card_entry_fragment)
-        }
         binding.buttonSearch.setOnClickListener {
-            findNavController().navigate(R.id.action_to_search_transaction_fragment)
+            // TODO: search
+
         }
     }
 
@@ -43,4 +36,5 @@ class FirstFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
