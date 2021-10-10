@@ -8,8 +8,8 @@ interface BankCardDao {
     @Query("SELECT * FROM BankCard")
     fun getAll(): List<BankCard>
 
-    @Query("SELECT * FROM BankCard WHERE cardNumber LIKE :bankCardNum LIMIT 1")
-    fun findByBankCardNum(bankCardNum: String): BankCard
+    @Query("SELECT * FROM BankCard WHERE cardNumber=:bankCardNum LIMIT 1")
+    fun findByBankCardNum(bankCardNum: String): BankCard?
 
     @Transaction
     @Query("SELECT * FROM BankCard")

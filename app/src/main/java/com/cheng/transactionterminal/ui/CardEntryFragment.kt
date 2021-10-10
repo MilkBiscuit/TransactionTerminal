@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -138,7 +138,8 @@ class CardEntryFragment : Fragment(), ICardEntryView {
     }
 
     override fun onTransactionSaved() {
-        findNavController().navigate(R.id.action_to_first_fragment)
+        Toast.makeText(context, R.string.toast_transaction_saved, Toast.LENGTH_SHORT).show()
+        findNavController().navigateUp()
     }
 
     private fun setInputLayoutError(stringResId: Int) = if (stringResId == 0) {

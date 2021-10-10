@@ -28,6 +28,8 @@
     <string name="warning_moto_type_missing">Please choose a type</string>
     <string name="warning_no_cvv_reason_missing">Please specify the reason of CVV missing</string>
     <string name="warning_invalid_card_number">Invalid or unsupported form of payment</string>
+    <string name="toast_transaction_saved">Transaction is saved.</string>
+
     <string-array name="moto_type_values">
         <item>Single</item>
         <item>Recurring</item>

@@ -1,12 +1,18 @@
 package com.cheng.transactionterminal.presenter
 
+import com.cheng.transactionterminal.MainApplication
 import com.cheng.transactionterminal.R
 import com.cheng.transactionterminal.contract.ICardEntryPresenter
 import com.cheng.transactionterminal.contract.ICardEntryView
+import com.cheng.transactionterminal.entity.BankCard
 import com.cheng.transactionterminal.entity.MoToType
 import com.cheng.transactionterminal.entity.NoCvvReason
 import com.cheng.transactionterminal.usecase.ExpiryTimeUtil
 import com.cheng.transactionterminal.usecase.ExpiryTimeValidationResult
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CardEntryPresenter(private val view: ICardEntryView) : ICardEntryPresenter {
 
@@ -57,9 +63,17 @@ class CardEntryPresenter(private val view: ICardEntryView) : ICardEntryPresenter
         }
 
         if (isValid) {
-            // TODO: save the transaction
+            CoroutineScope(Dispatchers.IO).launch {
+                MainApplication.appRepository?.apply {
+                    // TODO: amountInCents is hardcoded as 999
+                    val bankCard = BankCard(cardNumber.toString(), expiry.toString(), cvv.toString())
+                    insertTransaction(999, bankCard, moToType!!)
 
-            view.onTransactionSaved()
+                    withContext(Dispatchers.Main) {
+                        view.onTransactionSaved()
+                    }
+                }
+            }
         }
     }
 
