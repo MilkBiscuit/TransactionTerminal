@@ -9,6 +9,7 @@ import com.cheng.transactionterminal.entity.MoToType
 import com.cheng.transactionterminal.entity.NoCvvReason
 import com.cheng.transactionterminal.usecase.ExpiryTimeUtil
 import com.cheng.transactionterminal.usecase.ExpiryTimeValidationResult
+import com.cheng.transactionterminal.usecase.StringUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class CardEntryPresenter(private val view: ICardEntryView) : ICardEntryPresenter
         cardNumber: CharSequence?,
         expiry: CharSequence?,
         cvv: CharSequence?,
-        cardStored: Boolean,
+        isCardStored: Boolean,
         moToType: MoToType?,
         noCvvReason: NoCvvReason?
     ) {
@@ -67,8 +68,9 @@ class CardEntryPresenter(private val view: ICardEntryView) : ICardEntryPresenter
             CoroutineScope(Dispatchers.IO).launch {
                 MainApplication.appRepository?.apply {
                     // TODO: amountInCents is hardcoded as 999
-                    val bankCard = BankCard(cardNumber.toString(), expiry.toString(), cvv.toString())
-                    insertTransaction(999, Date(), bankCard, moToType!!)
+                    val encryptedCardNumber = StringUtil.encrypt(cardNumber.toString(), StringUtil.ENCRYPT_PASSWORD)
+                    val bankCard = BankCard(encryptedCardNumber, expiry.toString(), cvv.toString())
+                    insertTransaction(9527, Date(), bankCard, moToType!!, noCvvReason, isCardStored)
 
                     withContext(Dispatchers.Main) {
                         view.onTransactionSaved()

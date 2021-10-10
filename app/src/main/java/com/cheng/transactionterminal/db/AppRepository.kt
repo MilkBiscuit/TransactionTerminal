@@ -2,7 +2,9 @@ package com.cheng.transactionterminal.db
 
 import com.cheng.transactionterminal.entity.BankCard
 import com.cheng.transactionterminal.entity.MoToType
+import com.cheng.transactionterminal.entity.NoCvvReason
 import com.cheng.transactionterminal.entity.TransactionRecord
+import com.cheng.transactionterminal.usecase.StringUtil
 import java.util.*
 
 class AppRepository(
@@ -24,7 +26,7 @@ class AppRepository(
 
         val transactionRecordList = mutableListOf<TransactionRecord>()
         val bankCardWithTransactions = bankCardWithTransactionsList.filter {
-            it.bankCard.cardNumber.endsWith(lastFourDigits)
+            StringUtil.decrypt(it.bankCard.cardNumber, StringUtil.ENCRYPT_PASSWORD).endsWith(lastFourDigits)
         }
         // The result may contain record from other consumers whose cards have the same last 4 digits
         for (cardWithTransaction in bankCardWithTransactions) {
@@ -34,7 +36,12 @@ class AppRepository(
         return transactionRecordList
     }
 
-    fun insertTransaction(amountInCents: Int, date: Date, bankCard: BankCard, motoType: MoToType) {
+    fun insertTransaction(amountInCents: Int, date: Date,
+                          bankCard: BankCard,
+                          motoType: MoToType,
+                          noCvvReason: NoCvvReason?,
+                          isCardStored: Boolean
+    ) {
         var cardId: Long?
         val cardInDb = bankCardDao.findByBankCardNum(bankCard.cardNumber)
         if (cardInDb == null) {
@@ -49,7 +56,9 @@ class AppRepository(
             amountInCents,
             cardId!!,
             date.time,
-            motoType
+            motoType,
+            noCvvReason,
+            isCardStored
         )
         transactionRecordDao.insert(transactionRecord)
     }
