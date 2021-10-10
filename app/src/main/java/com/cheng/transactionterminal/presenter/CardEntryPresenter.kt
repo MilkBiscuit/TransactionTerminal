@@ -1,5 +1,6 @@
 package com.cheng.transactionterminal.presenter
 
+import androidx.core.content.edit
 import com.cheng.transactionterminal.MainApplication
 import com.cheng.transactionterminal.R
 import com.cheng.transactionterminal.contract.ICardEntryPresenter
@@ -7,9 +8,8 @@ import com.cheng.transactionterminal.contract.ICardEntryView
 import com.cheng.transactionterminal.entity.BankCard
 import com.cheng.transactionterminal.entity.MoToType
 import com.cheng.transactionterminal.entity.NoCvvReason
-import com.cheng.transactionterminal.usecase.ExpiryTimeUtil
-import com.cheng.transactionterminal.usecase.ExpiryTimeValidationResult
-import com.cheng.transactionterminal.usecase.StringUtil
+import com.cheng.transactionterminal.entity.TransactionRecord
+import com.cheng.transactionterminal.usecase.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +17,57 @@ import kotlinx.coroutines.withContext
 import java.util.*
 
 class CardEntryPresenter(private val view: ICardEntryView) : ICardEntryPresenter {
+
+    override fun saveTempTransaction(
+        cardNumber: CharSequence?,
+        expiry: CharSequence?,
+        cvv: CharSequence?,
+        cardStored: Boolean,
+        moToType: MoToType?,
+        noCvvReason: NoCvvReason?
+    ) {
+        // Save current input into encrypted shared preferences
+        SharedPrefHelper.defaultSharedPref.edit {
+            val encryptedCardNumber = CardNumberUtil.encryptCardNumber(cardNumber?.toString() ?: "")
+            putString(SharedPrefKey.KEY_ENCRYPTED_CURRENT_CARD_NUMBER, encryptedCardNumber)
+
+            expiry?.let {
+                putString(SharedPrefKey.KEY_EXPIRY_DATE, it.toString())
+            }
+            cvv?.let {
+                putString(SharedPrefKey.KEY_CVV, it.toString())
+            }
+            moToType?.let {
+                putString(SharedPrefKey.KEY_MOTO_TYPE, it.toString())
+            }
+            noCvvReason?.let {
+                putString(SharedPrefKey.KEY_NO_CVV_REASON, it.toString())
+            }
+            putBoolean(SharedPrefKey.KEY_IS_CARD_STORED, cardStored)
+        }
+    }
+
+    override fun readTempTransaction(): Pair<BankCard, TransactionRecord> {
+        val encryptedNumber = SharedPrefHelper.defaultSharedPref.getString(
+            SharedPrefKey.KEY_ENCRYPTED_CURRENT_CARD_NUMBER, null
+        )
+        val cardNumber = if (encryptedNumber == null) "" else CardNumberUtil.decryptCardNumber(encryptedNumber)
+        val expiry = SharedPrefHelper.defaultSharedPref.getString(SharedPrefKey.KEY_EXPIRY_DATE, "")!!
+        val cvv = SharedPrefHelper.defaultSharedPref.getString(SharedPrefKey.KEY_CVV, "")!!
+        val bankCard = BankCard(cardNumber, expiry, cvv)
+
+        val motoTypeString = SharedPrefHelper.defaultSharedPref.getString(SharedPrefKey.KEY_MOTO_TYPE, "")
+        val motoType = MoToType.toMotoType(motoTypeString)
+        val noCvvReasonString = SharedPrefHelper.defaultSharedPref.getString(SharedPrefKey.KEY_NO_CVV_REASON, "")
+        val noCvvReason = NoCvvReason.toNoCvvReason(noCvvReasonString)
+        val isCardStored = SharedPrefHelper.defaultSharedPref.getBoolean(SharedPrefKey.KEY_IS_CARD_STORED, false)
+        val transactionRecord = TransactionRecord(
+            0, 0, 0L,
+            motoType, noCvvReason, isCardStored
+        )
+
+        return Pair(bankCard, transactionRecord)
+    }
 
     override fun submitTransaction(
         cardNumber: CharSequence?,

@@ -11,6 +11,7 @@ class Converter {
     }
     @TypeConverter
     fun toMotoType(type: String): MoToType? {
+        // TODO: refactor
         return MoToType.values().find { it.name == type }
     }
 

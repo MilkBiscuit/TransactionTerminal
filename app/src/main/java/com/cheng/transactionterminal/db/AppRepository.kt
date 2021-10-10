@@ -4,6 +4,7 @@ import com.cheng.transactionterminal.entity.BankCard
 import com.cheng.transactionterminal.entity.MoToType
 import com.cheng.transactionterminal.entity.NoCvvReason
 import com.cheng.transactionterminal.entity.TransactionRecord
+import com.cheng.transactionterminal.usecase.CardNumberUtil
 import com.cheng.transactionterminal.usecase.StringUtil
 import java.util.*
 
@@ -26,7 +27,7 @@ class AppRepository(
 
         val transactionRecordList = mutableListOf<TransactionRecord>()
         val bankCardWithTransactions = bankCardWithTransactionsList.filter {
-            StringUtil.decrypt(it.bankCard.cardNumber, StringUtil.ENCRYPT_PASSWORD).endsWith(lastFourDigits)
+            CardNumberUtil.decryptCardNumber(it.bankCard.cardNumber).endsWith(lastFourDigits)
         }
         // The result may contain record from other consumers whose cards have the same last 4 digits
         for (cardWithTransaction in bankCardWithTransactions) {

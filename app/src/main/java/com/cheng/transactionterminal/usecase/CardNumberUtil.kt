@@ -28,6 +28,15 @@ object CardNumberUtil {
 
     fun removeWhiteSpace(input: String) = input.filterNot { it.isWhitespace() }
 
+    fun encryptCardNumber(input: String): String {
+        val afterRemoveSpace = removeWhiteSpace(input)
+        return StringUtil.encrypt(afterRemoveSpace, StringUtil.ENCRYPT_PASSWORD)
+    }
+
+    fun decryptCardNumber(input: String): String {
+        return StringUtil.decrypt(input, StringUtil.ENCRYPT_PASSWORD)
+    }
+
     fun formatCardNumber(input: String): String {
         val inputLen = input.length
         if (inputLen == 0 || inputLen > CARD_NUMBER_MAX_LENGTH) {

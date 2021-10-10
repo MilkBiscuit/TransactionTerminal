@@ -1,9 +1,9 @@
 package com.cheng.transactionterminal.ui
 
+import android.app.Activity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
@@ -30,11 +30,24 @@ class CardEntryFragment : Fragment(), ICardEntryView {
     private val binding get() = _binding!!
     private var currentMoToType: MoToType? = null
     private var noCvvReason: NoCvvReason? = null
+    private val focusChangeListener: View.OnFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+        if (!hasFocus) {
+            presenter.saveTempTransaction(
+                binding.editTextCardNumber.text,
+                binding.editTextExpiry.text,
+                binding.editTextCvv.text,
+                binding.switchCardStored.isChecked,
+                currentMoToType,
+                noCvvReason
+            )
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         _binding = FragmentCardEntryBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -106,11 +119,36 @@ class CardEntryFragment : Fragment(), ICardEntryView {
                 noCvvReason,
             )
         }
+        binding.editTextCardNumber.onFocusChangeListener = focusChangeListener
+        binding.editTextExpiry.onFocusChangeListener = focusChangeListener
+        binding.editTextCvv.onFocusChangeListener = focusChangeListener
+        binding.autoCompleteTextViewMotoType.onFocusChangeListener = focusChangeListener
+        binding.autoCompleteTextViewNoCvv.onFocusChangeListener = focusChangeListener
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_load_transaction -> {
+                val pair = presenter.readTempTransaction()
+                val bankCard = pair.first
+                binding.editTextCardNumber.setText(bankCard.cardNumber)
+                binding.editTextExpiry.setText(bankCard.expiryDate)
+                binding.editTextCvv.setText(bankCard.cvv)
+                // TODO: moto type, no cvv reason etc.
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun showNoCvvReason() {
