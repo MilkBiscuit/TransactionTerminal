@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.cheng.transactionterminal.R
 import com.cheng.transactionterminal.contract.ISearchTransactionView
 import com.cheng.transactionterminal.databinding.FragmentSearchTransactionBinding
-import com.cheng.transactionterminal.entity.TransactionRecord
+import com.cheng.transactionterminal.db.BankCardWithTransactions
 import com.cheng.transactionterminal.presenter.SearchTransactionPresenter
 import com.cheng.transactionterminal.usecase.DateUtil
 import java.util.*
@@ -41,13 +41,21 @@ class SearchTransactionFragment : Fragment(), ISearchTransactionView {
         _binding = null
     }
 
-    override fun showResult(transactions: List<TransactionRecord>) {
+    override fun showResult(bankCards: List<BankCardWithTransactions>) {
         // TODO: Use RecyclerView for pretty UIs
-        val resultAsText = transactions.joinToString(separator = "\n") {
-            val transactionDate = Date(it.transactionDate)
-            val formattedDate = DateUtil.formatDate(transactionDate)
+        val resultAsText = bankCards.joinToString(separator = "\n-----\n") {
+            val bankCard = it.bankCard
+            val transactions = it.transactionRecords.joinToString(separator = "\n") { transaction ->
+                val transactionDate = Date(transaction.transactionDate)
+                val formattedDate = DateUtil.formatDate(transactionDate)
 
-            "Amount: ${it.amountInCents}, Date: $formattedDate, noCvv: ${it.noCvvReason}"
+                "Date: $formattedDate, moto: ${transaction.moToType}, noCvv: ${transaction.noCvvReason}"
+            }
+            // TODO: If saved card number is less than 4 digits, will CRASH
+            val firstFour = bankCard.cardNumber.substring(0, 4)
+            val lastFour = bankCard.cardNumber.substring(bankCard.cardNumber.length - 4, bankCard.cardNumber.length)
+
+            "$firstFour****$lastFour\n$transactions"
         }
 
         binding.textViewSearchResult.text = resultAsText.ifBlank {

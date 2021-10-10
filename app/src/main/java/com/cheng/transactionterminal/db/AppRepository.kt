@@ -20,21 +20,26 @@ class AppRepository(
         bankCardWithTransactionsList.addAll(cardsWithTransactions)
     }
 
-    fun searchTransactionsByCardNumber(lastFourDigits: String): List<TransactionRecord> {
+    fun searchTransactionsByCardNumber(lastFourDigits: String): List<BankCardWithTransactions> {
         if (lastFourDigits.isBlank() || lastFourDigits.length != 4) {
             return emptyList()
         }
 
-        val transactionRecordList = mutableListOf<TransactionRecord>()
-        val bankCardWithTransactions = bankCardWithTransactionsList.filter {
+        // The result may contain record from other consumers whose cards have the same last 4 digits
+        val bankCards = bankCardWithTransactionsList.filter {
             CardNumberUtil.decryptCardNumber(it.bankCard.cardNumber).endsWith(lastFourDigits)
         }
-        // The result may contain record from other consumers whose cards have the same last 4 digits
-        for (cardWithTransaction in bankCardWithTransactions) {
-            transactionRecordList.addAll(cardWithTransaction.transactionRecords)
+        val decryptedBankCards = mutableListOf<BankCardWithTransactions>()
+        bankCards.forEach {
+            val bankCard = it.bankCard
+            val decryptedNumber = CardNumberUtil.decryptCardNumber(bankCard.cardNumber)
+            val decryptedCard = BankCard(decryptedNumber, bankCard.expiryDate, bankCard.cvv, bankCard.id)
+            decryptedBankCards.add(
+                BankCardWithTransactions(decryptedCard, it.transactionRecords)
+            )
         }
 
-        return transactionRecordList
+        return decryptedBankCards
     }
 
     fun insertTransaction(amountInCents: Int, date: Date,
