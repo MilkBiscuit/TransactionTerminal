@@ -8,5 +8,5 @@ data class BankCard(
     val cardNumber: String,
     val expiryDate: String = "",
     val cvv: String = "",
-    @PrimaryKey(autoGenerate = true) val bankCardId: Long = 0
+    @PrimaryKey(autoGenerate = true) val id: Long = 0
 )

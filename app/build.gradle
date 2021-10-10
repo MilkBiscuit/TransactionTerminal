@@ -46,8 +46,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
     // Database
+    // Room 2.2.4 does not work for relationships between objects
     // Room 2.3.0 build fails on Apple M1
-    def room_version = "2.2.4"
+    def room_version = "2.4.0-alpha05"
+
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation 'com.facebook.stetho:stetho:1.6.0'

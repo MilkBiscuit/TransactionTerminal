@@ -11,6 +11,10 @@ interface BankCardDao {
     @Query("SELECT * FROM BankCard WHERE cardNumber LIKE :bankCardNum LIMIT 1")
     fun findByBankCardNum(bankCardNum: String): BankCard
 
+    @Transaction
+    @Query("SELECT * FROM BankCard")
+    fun getBankCardAndTransactions(): List<BankCardAndTransaction>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg bankCard: BankCard): List<Long>
 

@@ -50,7 +50,7 @@ class FirstFragment : Fragment() {
                 BankCard("33333", "11/44", "456"),
             )
             val transactionId = AppDatabase.getDatabase(requireContext()).transactionDao().insert(
-                TransactionRecord(100, 1, MoToType.Single)
+                TransactionRecord(100, cardIds[0], MoToType.Single)
             )
 
             val i = 0;
