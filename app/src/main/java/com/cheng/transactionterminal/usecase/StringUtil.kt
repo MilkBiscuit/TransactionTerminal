@@ -1,4 +1,4 @@
-package com.cheng.transactionterminal.util
+package com.cheng.transactionterminal.usecase
 
 object StringUtil {
 

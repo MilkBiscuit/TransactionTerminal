@@ -1,5 +1,6 @@
-package com.cheng.transactionterminal.util
+package com.cheng.transactionterminal.usecase
 
+import com.cheng.transactionterminal.usecase.StringUtil
 import org.junit.Assert
 import org.junit.Test
 

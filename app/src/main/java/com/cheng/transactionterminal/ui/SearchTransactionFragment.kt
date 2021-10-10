@@ -47,7 +47,7 @@ class SearchTransactionFragment : Fragment(), ISearchTransactionView {
             val transactionDate = Date(it.transactionDate)
             val formattedDate = DateUtil.formatDate(transactionDate)
 
-            "Amount: ${it.amountInCents}, Date: $formattedDate"
+            "Amount: ${it.amountInCents}, Date: $formattedDate, noCvv: ${it.noCvvReason}"
         }
 
         binding.textViewSearchResult.text = resultAsText.ifBlank {

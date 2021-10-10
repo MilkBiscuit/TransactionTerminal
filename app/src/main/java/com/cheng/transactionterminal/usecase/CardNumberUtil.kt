@@ -1,7 +1,5 @@
 package com.cheng.transactionterminal.usecase
 
-import com.cheng.transactionterminal.util.StringUtil
-
 object CardNumberUtil {
 
     // Min and Max length of card number after formatting
