@@ -17,7 +17,8 @@ object StringUtil {
     // Could be any value or generated using a random number generator
     var iv = byteArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     var ivspec: IvParameterSpec = IvParameterSpec(iv)
-    // TODO: hardcoded password, should use some UI to let user input encrypt password
+    // TODO: hardcoded password, should use some UI to let user input a password to encrypt,
+    //  so that it is still possible to decrypt when switching to another storage
     const val ENCRYPT_PASSWORD = "P@ssw0rd!!!"
 
     fun encrypt(input: String, password: String): String {

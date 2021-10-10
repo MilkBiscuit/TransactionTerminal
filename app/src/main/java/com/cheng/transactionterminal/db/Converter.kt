@@ -11,8 +11,7 @@ class Converter {
     }
     @TypeConverter
     fun toMotoType(type: String): MoToType? {
-        // TODO: refactor
-        return MoToType.values().find { it.name == type }
+        return MoToType.toMotoType(type)
     }
 
     @TypeConverter
@@ -21,6 +20,6 @@ class Converter {
     }
     @TypeConverter
     fun toNoCvvReason(reason: String): NoCvvReason? {
-        return NoCvvReason.values().find { it.name == reason }
+        return NoCvvReason.toNoCvvReason(reason)
     }
 }

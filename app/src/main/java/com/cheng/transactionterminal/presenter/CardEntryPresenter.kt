@@ -121,8 +121,9 @@ class CardEntryPresenter(private val view: ICardEntryView) : ICardEntryPresenter
                     // TODO: amountInCents is hardcoded as 999
                     val encryptedCardNumber = StringUtil.encrypt(cardNumber.toString(), StringUtil.ENCRYPT_PASSWORD)
                     val bankCard = BankCard(encryptedCardNumber, expiry.toString(), cvv.toString())
-                    insertTransaction(9527, Date(), bankCard, moToType!!, noCvvReason, isCardStored)
+                    insertTransaction(999, Date(), bankCard, moToType!!, noCvvReason, isCardStored)
 
+                    // TODO: Clear saved transaction in shared preference
                     withContext(Dispatchers.Main) {
                         view.onTransactionSaved()
                     }

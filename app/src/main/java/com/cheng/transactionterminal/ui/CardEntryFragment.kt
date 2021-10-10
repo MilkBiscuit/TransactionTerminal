@@ -143,7 +143,7 @@ class CardEntryFragment : Fragment(), ICardEntryView {
                 binding.editTextCardNumber.setText(bankCard.cardNumber)
                 binding.editTextExpiry.setText(bankCard.expiryDate)
                 binding.editTextCvv.setText(bankCard.cvv)
-                // TODO: moto type, no cvv reason etc.
+                // TODO: refresh UIs for moto type, no cvv reason etc.
 
                 true
             }
