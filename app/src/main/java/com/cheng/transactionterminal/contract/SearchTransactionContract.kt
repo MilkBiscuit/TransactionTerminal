@@ -3,7 +3,7 @@ package com.cheng.transactionterminal.contract
 import com.cheng.transactionterminal.db.BankCardWithTransactions
 
 interface ISearchTransactionView {
-    fun showResult(transactions: List<BankCardWithTransactions>)
+    fun showResult(bankCards: List<BankCardWithTransactions>)
 }
 
 interface ISearchTransactionPresenter {
