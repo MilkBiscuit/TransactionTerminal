@@ -37,6 +37,13 @@
                     android:imeOptions="actionDone"
                     />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/text_view_search_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_super_large"
+                />
         </LinearLayout>
     </ScrollView>
 

@@ -44,5 +44,6 @@
     <string name="search_transaction_fragment_label">Search History Transaction</string>
     <string name="hint_card_number_last_4">Last 4 Digits of Card Number</string>
     <string name="hint_transaction_date">Transaction Date</string>
+    <string name="no_matched_transactions">No matched transactions found.</string>
 
 </resources>
