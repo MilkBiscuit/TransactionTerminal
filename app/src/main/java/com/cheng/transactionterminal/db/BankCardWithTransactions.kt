@@ -6,7 +6,7 @@ import com.cheng.transactionterminal.entity.BankCard
 import com.cheng.transactionterminal.entity.TransactionRecord
 
 // Assume BankCard and TransactionRecord has one-to-many relationship
-data class BankCardAndTransaction(
+data class BankCardWithTransactions(
     @Embedded
     val bankCard: BankCard,
 

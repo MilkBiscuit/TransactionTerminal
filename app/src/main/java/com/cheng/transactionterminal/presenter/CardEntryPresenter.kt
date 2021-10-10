@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class CardEntryPresenter(private val view: ICardEntryView) : ICardEntryPresenter {
 
@@ -67,7 +68,7 @@ class CardEntryPresenter(private val view: ICardEntryView) : ICardEntryPresenter
                 MainApplication.appRepository?.apply {
                     // TODO: amountInCents is hardcoded as 999
                     val bankCard = BankCard(cardNumber.toString(), expiry.toString(), cvv.toString())
-                    insertTransaction(999, bankCard, moToType!!)
+                    insertTransaction(999, Date(), bankCard, moToType!!)
 
                     withContext(Dispatchers.Main) {
                         view.onTransactionSaved()

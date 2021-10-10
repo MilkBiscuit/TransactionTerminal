@@ -13,7 +13,7 @@ interface BankCardDao {
 
     @Transaction
     @Query("SELECT * FROM BankCard")
-    fun getBankCardAndTransactions(): List<BankCardAndTransaction>
+    fun getBankCardAndTransactions(): List<BankCardWithTransactions>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg bankCard: BankCard): List<Long>

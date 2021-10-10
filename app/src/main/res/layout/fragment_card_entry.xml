@@ -22,14 +22,14 @@
             android:animationCache="true"
             android:orientation="vertical"
             >
-            <!-- TODO: hardcoded text-->
+            <!-- TODO: hardcoded amount -->
             <TextView
                 android:id="@+id/text_view_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_standard"
-                android:text="$100.00"
+                android:text="$9.99"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 />
